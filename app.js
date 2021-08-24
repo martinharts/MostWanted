@@ -12,7 +12,7 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
+      searchResults = searchByTrait(people);
       break;
       default:
     app(people); // restart app
@@ -69,6 +69,81 @@ function searchByName(people){
   })
   // TODO: find the person using the name they entered
   return foundPerson;
+}
+
+//Trait
+
+function searchByGender(people){
+  let gender = promptFor("What is the person's gender?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.gender === gender){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the trait they entered
+  return foundPerson;
+}
+
+function searchByHeight(people){
+  let height = parseInt.promptFor("What is the person's height?", chars);
+  let foundPerson = people.filter(function(person){  
+    if(person.height === height){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return foundPerson;
+}
+
+function searchByWeight(people){
+  let weight = parseInt.promptFor("What is the person's weight?", chars);
+  let foundPerson = people.filter(function(person){  
+    if(person.weight === weight){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return foundPerson;
+}
+
+function searchByEyeColor(people){
+  let eyeColor = promptFor("What is the person's eye color?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.eyeColor === eyeColor){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the trait they entered
+  return foundPerson;
+}
+
+function searchByTrait(){
+  let searchTrait = promptFor("Which trait would you like to search? Gender, Weight, Eye Color, or Height").toLowerCase();
+    switch(searchTrait){ 
+      case "gender":
+        searchByGender(searchTrait)
+        break;
+      case "weight":
+        searchByWeight(searchTrait)
+        break;
+      case "eye color":
+        searchByGender(searchTrait)
+        break;
+      case "height":
+        searchByHeight(searchTrait)
+        break;  
+      default:
+    }
 }
 
 // alerts a list of people
