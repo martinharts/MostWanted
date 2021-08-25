@@ -46,6 +46,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
+    displayDescendants(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -76,7 +77,7 @@ function searchByName(people){
 //Trait
 
 function searchByGender(people){
-  let gender = promptFor("What is the person's gender?", chars);
+  let gender = promptFor("What is the person's gender?", chars).toLowerCase();
   let foundPerson = people.filter(function(person){
     if(person.gender === gender){
       return true;
@@ -145,7 +146,7 @@ function searchByOccupation(people){
 
 
 function searchByTrait(){
-  let searchTrait = promptFor("Which trait would you like to search? Gender, Weight, Eye Color, or Height").toLowerCase();
+  let searchTrait = prompt("Which trait would you like to search? Gender, Weight, Eye Color, or Height").toLowerCase();
     switch(searchTrait){ 
       case "gender":
         searchByGender(searchTrait)
@@ -176,7 +177,7 @@ function displayPeople(people){
 function displayFamily(person, people){
 let personsID = person.id;
 let foundPerson = people.filter(function(person){
-  if(person.currentSpouse === personsID || person.parents == personsID){
+  if(person.currentSpouse === personsID || person.parents.includes(personsID)){
     return true;
   }
   else{
@@ -184,6 +185,19 @@ let foundPerson = people.filter(function(person){
   }
 })
 displayPeople(foundPerson);
+}
+
+function displayDescendants(person, people){
+  let personsID = person.id;
+  let foundPerson = people.filter(function(person){
+    if(person.parents.includes(personsID)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  displayPeople(foundPerson);
 }
 
 
