@@ -20,7 +20,7 @@ function app(people){
   }
   
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
+  mainMenu(searchResults[0], people);
 }
 
 // Menu function to call once you find who you are looking for
@@ -38,9 +38,11 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPerson(person); 
     break;
     case "family":
     // TODO: get person's family
+    displayFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -127,6 +129,21 @@ function searchByEyeColor(people){
   return foundPerson;
 }
 
+function searchByOccupation(people){
+  let eyeColor = promptFor("What is the person's occupation?", chars);
+  let foundPerson = people.filter(function(person){
+    if(person.occupation === occupation){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the trait they entered
+  return foundPerson;
+}
+
+
 function searchByTrait(){
   let searchTrait = promptFor("Which trait would you like to search? Gender, Weight, Eye Color, or Height").toLowerCase();
     switch(searchTrait){ 
@@ -142,6 +159,9 @@ function searchByTrait(){
       case "height":
         searchByHeight(searchTrait)
         break;  
+      case "occupation":
+        searchByOccupation(searchTrait)
+        break;
       default:
     }
 }
@@ -153,11 +173,28 @@ function displayPeople(people){
   }).join("\n"));
 }
 
+function displayFamily(person, people){
+  let searchResult = people;
+    switch(searchResult){
+      case person.id === searchResult.currentSpouse:
+      displayPeople(searchResult);
+      break;
+      default:
+    }
+}
+
+
+
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "occupation: " + person.occupation + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
