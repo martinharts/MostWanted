@@ -130,7 +130,7 @@ function searchByEyeColor(people){
 }
 
 function searchByOccupation(people){
-  let eyeColor = promptFor("What is the person's occupation?", chars);
+  let occupation = promptFor("What is the person's occupation?", chars);
   let foundPerson = people.filter(function(person){
     if(person.occupation === occupation){
       return true;
@@ -172,17 +172,19 @@ function displayPeople(people){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
-
+//includes 
 function displayFamily(person, people){
-  let searchResult = people;
-    switch(searchResult){
-      case person.id === searchResult.currentSpouse:
-      displayPeople(searchResult);
-      break;
-      default:
-    }
+let personsID = person.id;
+let foundPerson = people.filter(function(person){
+  if(person.currentSpouse === personsID || person.parents == personsID){
+    return true;
+  }
+  else{
+    return false;
+  }
+})
+displayPeople(foundPerson);
 }
-
 
 
 function displayPerson(person){
