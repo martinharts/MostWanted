@@ -196,26 +196,28 @@ let foundPerson = people.filter(function(person){
 })
 displayPeople(foundPerson);
 }
-
+let arrDescen = [] 
 function displayDescendants(person, people){
   let personsID = person.id;
-  let arrDescendants = [];
   let foundPerson = people.filter(function(person){
-    if(person.parents.includes(personsID)){
+  if(person.parents.includes(personsID)){
+    if(person != arrDescen){
+      arrDescen.push(person);
       return true;
     }
     else{
-      return false;
+        return true
     }
+  }
+  else{
+    return false;
+   }
   })
-
-     for(let i = 0; i < foundPerson.length; i++){
-      //  arrDescendants.push(foundPerson[i]);
-      displayDescendants(foundPerson[i],people)
-      //think we need to arrDescentants = foundperson
-      
+    for(let i = foundPerson.length - 1; i >= 0; i--){
+      displayDescendants(foundPerson[i],people);
+        displayPeople(arrDescen);
      }
-     displayPeople(foundPerson)
+     
 }
 
 
