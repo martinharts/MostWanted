@@ -91,9 +91,9 @@ function searchByGender(people){
 }
 
 function searchByHeight(people){
-  let height = parseInt.promptFor("What is the person's height?", chars);
+  let height = promptFor("What is the person's height?", chars);
   let foundPerson = people.filter(function(person){  
-    if(person.height === height){
+    if(person.height == height){
       return true;
     }
     else{
@@ -104,9 +104,9 @@ function searchByHeight(people){
 }
 
 function searchByWeight(people){
-  let weight = parseInt.promptFor("What is the person's weight?", chars);
+  let weight = promptFor("What is the person's weight?", chars);
   let foundPerson = people.filter(function(person){  
-    if(person.weight === weight){
+    if(person.weight == weight){
       return true;
     }
     else{
@@ -145,26 +145,36 @@ function searchByOccupation(people){
 }
 
 
-function searchByTrait(){
-  let searchTrait = prompt("Which trait would you like to search? Gender, Weight, Eye Color, or Height").toLowerCase();
+function searchByTrait(people){
+  let resultTrait = people;
+  do{
+    let searchTrait = promptFor('What trait would you like to search?\nGender\nWeight\nEye Color\nHeight\nOccupation',chars);
     switch(searchTrait){ 
-      case "gender":
-        searchByGender(searchTrait)
+      case 'gender':
+      resultTrait = searchByGender(people);
+      displayPeople(resultTrait);
         break;
-      case "weight":
-        searchByWeight(searchTrait)
+      case 'weight':
+        resultTrait =   searchByWeight(people);
+        displayPeople(resultTrait);
         break;
-      case "eye color":
-        searchByGender(searchTrait)
+      case 'eye color':
+        resultTrait = searchByGender(people);
+        displayPeople(resultTrait);
         break;
       case "height":
-        searchByHeight(searchTrait)
+        resultTrait = searchByHeight(people);
+        displayPeople(resultTrait);
         break;  
       case "occupation":
-        searchByOccupation(searchTrait)
+        resultTrait = searchByOccupation(people);
+        displayPeople(resultTrait);
         break;
       default:
     }
+  }
+  while(resultTrait.length > 1);
+  return resultTrait
 }
 
 // alerts a list of people
@@ -189,6 +199,7 @@ displayPeople(foundPerson);
 
 function displayDescendants(person, people){
   let personsID = person.id;
+  let arrDescendants = [];
   let foundPerson = people.filter(function(person){
     if(person.parents.includes(personsID)){
       return true;
@@ -197,7 +208,14 @@ function displayDescendants(person, people){
       return false;
     }
   })
-  displayPeople(foundPerson);
+
+     for(let i = 0; i < foundPerson.length; i++){
+      //  arrDescendants.push(foundPerson[i]);
+      displayDescendants(foundPerson[i],people)
+      //think we need to arrDescentants = foundperson
+      
+     }
+     displayPeople(foundPerson)
 }
 
 
