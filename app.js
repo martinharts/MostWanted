@@ -43,7 +43,7 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
-    displayFamily(person, people);
+    displaySpouse(person, people);
     mainMenu(person, people);
     break;
     case "descendants":
@@ -189,45 +189,41 @@ function displayPeople(people){
   }).join("\n"));
 }
 
-function displayFamilyInfo(foundPerson, person){
- let personID = person.id;
- let foundParent = [];
- foundParent = foundPerson.parents
+function displayFamilyInfo(foundPerson, relationship){
 
- if(personID === foundParent){
-  alert(people.map(function(person){
-   return "Parent: " + person.firstName + " " + person.lastName;
+  alert(foundPerson.map(function(person){
+   return relationship + ": " + person.firstName + " " + person.lastName;
  }).join("\n"));
- else if(foundParent === person.parents){
-  alert(people.map(function(person){
-   return "Sibling: " + person.firstName + " " + person.lastName;
- }).join("\n"));
- else if(personID === foundPerson.currentSpouse){
-  alert(people.map(function(person){
-   return "Spouse: " + person.firstName + " " + person.lastName;
-
-  }).join("\n"));
-
-  alert(personInfo);
 }
- }
+ 
 
 //includes 
-function displayFamily(person, people){
-let personsID = person.id;
-let persParent = [];
-persParent = person.parents
-let foundPerson = people.filter(function(el){
-  let elParent = el.id
-  if(el.currentSpouse === personsID || el.parents.includes(personsID)|| elParent === persParent[0]|| elParent === persParent[1] ){
-    return true;
-  }
-  else{
-    return false;
-  }
-})
-displayFamilyInfo(foundPerson, person);
+function displaySpouse(person, people){
+  let foundPerson = people.filter(function(el){
+    if(el.currentSpouse === person.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+    displayFamilyInfo(foundPerson,"spouse")
 }
+// function displayFamily(person, people){
+// let personsID = person.id;
+// let persParent = [];
+// persParent = person.parents
+// let foundPerson = people.filter(function(el){
+//   let elParent = el.id
+//   if(el.currentSpouse === personsID || el.parents.includes(personsID)|| elParent === persParent[0]|| elParent === persParent[1] ){
+//     return true;
+//   }
+//   else{
+//     return false;
+//   }
+// })
+//  displayFamilyInfo(foundPerson, person);
+// }
 
 let arrDescen = [] 
 function displayDescendants(person, people){
