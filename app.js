@@ -43,7 +43,9 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
+    displayParents(person,people).join("\n");
     displaySpouse(person, people);
+    displaySiblings(person,people);
     mainMenu(person, people);
     break;
     case "descendants":
@@ -207,8 +209,33 @@ function displaySpouse(person, people){
       return false;
     }
   })
-    displayFamilyInfo(foundPerson,"spouse")
+    displayFamilyInfo(foundPerson,"Spouse")
 }
+
+function displaySiblings(person, people){
+  let foundPerson = people.filter(function(el){
+    if(el.parents === person.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+    displayFamilyInfo(foundPerson,"Sibling")
+}
+
+function displayParents(person, people){
+  let foundPerson = people.filter(function(el){
+    if(el.id === person.parents){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+    displayFamilyInfo(foundPerson,"Parent")
+}
+
 // function displayFamily(person, people){
 // let personsID = person.id;
 // let persParent = [];
