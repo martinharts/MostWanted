@@ -43,7 +43,7 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
-    displayParents(person,people).join("\n");
+    displayParents(person,people);
     displaySpouse(person, people);
     displaySiblings(person,people);
     mainMenu(person, people);
@@ -154,26 +154,26 @@ function searchByOccupation(people){
 function searchByTrait(people){
   let resultTrait = people;
   do{
-    let searchTrait = promptFor('What trait would you like to search?\nGender\nWeight\nEye Color\nHeight\nOccupation',chars);
+    let searchTrait = promptFor('What trait would you like to search?\nGender\nWeight\nEye Color\nHeight\nOccupation',chars).toLowerCase();
     switch(searchTrait){ 
       case 'gender':
-      resultTrait = searchByGender(people);
+      resultTrait = searchByGender(resultTrait);
       displayPeople(resultTrait);
         break;
       case 'weight':
-        resultTrait =   searchByWeight(people);
+        resultTrait =   searchByWeight(resultTrait);
         displayPeople(resultTrait);
         break;
       case 'eye color':
-        resultTrait = searchByEyeColor(people);
+        resultTrait = searchByEyeColor(resultTrait);
         displayPeople(resultTrait);
         break;
       case "height":
-        resultTrait = searchByHeight(people);
+        resultTrait = searchByHeight(resultTrait);
         displayPeople(resultTrait);
         break;  
       case "occupation":
-        resultTrait = searchByOccupation(people);
+        resultTrait = searchByOccupation(resultTrait);
         displayPeople(resultTrait);
         break;
       default:
@@ -192,11 +192,14 @@ function displayPeople(people){
 }
 
 function displayFamilyInfo(foundPerson, relationship){
-
+  if(foundPerson.length < 1){
+    alert("This person has no " + relationship + ".");
+  }
+  else{
   alert(foundPerson.map(function(person){
    return relationship + ": " + person.firstName + " " + person.lastName;
  }).join("\n"));
-}
+  }}
  
 
 //includes 
@@ -214,8 +217,13 @@ function displaySpouse(person, people){
 
 function displaySiblings(person, people){
   let foundPerson = people.filter(function(el){
-    if(el.parents === person.id){
-      return true;
+  let parLength = el.parents
+    if(el.id === person.id)
+    return false;
+    else if(parLength.length < 2)
+      return false
+    else if(el.parents[0] === person.parents[0] || el.parents[0] === person.parents[1] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[1]){
+        return true;
     }
     else{
       return false;
@@ -226,7 +234,7 @@ function displaySiblings(person, people){
 
 function displayParents(person, people){
   let foundPerson = people.filter(function(el){
-    if(el.id === person.parents){
+    if(el.id === person.parents[0] || el.id === person.parents[1]){
       return true;
     }
     else{
